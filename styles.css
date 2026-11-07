@@ -105,6 +105,7 @@ button:focus-visible, input:focus-visible { outline: 3px solid rgba(229, 199, 10
 .video-stage video[hidden], .video-stage img[hidden] { display: none; }
 .video-wash { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(20, 25, 21, .6), rgba(20,25,21,.06) 42%, rgba(20,25,21,.84)); }
 .video-stage.has-youtube .video-wash, .video-stage.has-youtube > .video-topline, .video-stage.has-youtube > .video-bottomline, .video-stage.has-youtube > .progress-track { display: none; }
+.video-stage.has-youtube > .play-button { display: none; }
 .video-stage > .video-topline, .video-stage > .play-button, .video-stage > .video-bottomline, .video-stage > .progress-track { position: relative; z-index: 2; }
 .video-topline, .video-bottomline { justify-content: space-between; gap: 14px; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
 .video-topline { color: #e8e6d5; }
