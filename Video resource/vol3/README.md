@@ -1,3 +1,3 @@
 # Vol 3 videos
 
-Place the four Vol 3 tutor videos in this folder. Use the same file name in `Video resource/videos.json`, for example `vol3/reading-between-lines.mp4`.
+Vol 3 lessons now use private or unlisted YouTube links. Add each lesson to `Video resource/videos.json` with a `youtubeUrl`; no video file needs to be committed to this folder.

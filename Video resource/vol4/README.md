@@ -1,3 +1,3 @@
 # Vol 4 videos
 
-Place the four Vol 4 tutor videos in this folder. Use the same file name in `Video resource/videos.json`, for example `vol4/algebra-essentials.mp4`.
+Vol 4 lessons now use private or unlisted YouTube links. Add each lesson to `Video resource/videos.json` with a `youtubeUrl`; no video file needs to be committed to this folder.

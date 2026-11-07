@@ -22,13 +22,13 @@
         <nav class="main-nav">
           <p class="nav-label">Your desk</p>
           <button class="nav-item is-active" data-view="Home" type="button">
-            <i data-lucide="house" aria-hidden="true"></i><span>Home</span><span class="nav-count">12</span>
+            <i data-lucide="house" aria-hidden="true"></i><span>Home</span><span class="nav-count">0</span>
           </button>
           <button class="nav-item" data-view="Library" type="button">
-            <i data-lucide="library" aria-hidden="true"></i><span>Library</span><span class="nav-count">24</span>
+            <i data-lucide="library" aria-hidden="true"></i><span>Library</span><span class="nav-count">0</span>
           </button>
           <button class="nav-item" data-view="Saved" type="button">
-            <i data-lucide="bookmark" aria-hidden="true"></i><span>Saved</span><span class="nav-count">7</span>
+            <i data-lucide="bookmark" aria-hidden="true"></i><span>Saved</span><span class="nav-count">0</span>
           </button>
         </nav>
 
@@ -39,8 +39,8 @@
 
         <div class="sidebar-footer">
           <button class="profile-button" type="button" aria-label="Open profile">
-            <span class="avatar">AM</span>
-            <span class="profile-copy"><strong>Alex Morgan</strong><small>Evening learner</small></span>
+            <span class="avatar">EN</span>
+            <span class="profile-copy"><strong>English learner</strong><small>Study desk</small></span>
             <i data-lucide="chevrons-up-down" aria-hidden="true"></i>
           </button>
         </div>
@@ -54,7 +54,7 @@
           </div>
           <div class="topbar-copy">
             <p class="date-line" id="dateLine">Tuesday, November 7, 2026</p>
-            <h1 id="greeting">Good evening, Alex.</h1>
+            <h1 id="greeting">Good evening.</h1>
           </div>
           <label class="search-box">
             <i data-lucide="search" aria-hidden="true"></i>
@@ -88,32 +88,46 @@
                 <p class="section-kicker">Pick up where you left off</p>
                 <h2 id="continueTitle">Continue watching</h2>
               </div>
-              <span class="lesson-count" id="lessonCount">3 lessons in progress</span>
+              <span class="lesson-count" id="lessonCount">No lessons yet</span>
             </div>
 
-            <article class="featured-lesson" id="featuredLesson">
+            <article class="featured-lesson is-empty" id="featuredLesson">
               <div class="video-stage" id="videoStage">
-                <img id="featuredPoster" src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&amp;fit=crop&amp;w=1400&amp;q=85" alt="Tutor writing a math problem on a glass board" />
-                <video id="featuredVideo" controls playsinline preload="metadata" hidden></video>
+                <img id="featuredPoster" src="" alt="" hidden />
+                <video id="featuredVideo" playsinline preload="metadata" hidden></video>
+                <iframe id="featuredEmbed" title="YouTube lesson player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen hidden></iframe>
                 <div class="video-wash" aria-hidden="true"></div>
-                <div class="video-topline"><span class="live-dot"></span><span id="videoStatus">Preview lesson</span><span class="video-duration" id="featuredDuration">14:32</span></div>
-                <button class="play-button" id="playButton" type="button" aria-label="Play Algebra essentials lesson"><i data-lucide="play" aria-hidden="true"></i></button>
+                <div class="video-topline"><span class="live-dot"></span><span id="videoStatus">No lesson selected</span><span class="video-duration" id="featuredDuration"></span></div>
+                <button class="play-button" id="playButton" type="button" aria-label="Play lesson" hidden><i data-lucide="play" aria-hidden="true"></i></button>
                 <div class="video-bottomline">
-                  <span id="featuredProgressLabel">06:18 watched</span>
-                  <span id="featuredLessonNumber">Lesson 03 of 08</span>
+                  <span id="featuredProgressLabel"></span>
+                  <span id="featuredLessonNumber"></span>
                 </div>
-                <div class="progress-track" aria-label="Lesson progress"><span id="featuredProgressBar" style="width: 43%"></span></div>
+                <div class="progress-track" aria-label="Lesson progress"><span id="featuredProgressBar" style="width: 0%"></span></div>
+                <div class="player-controls" id="playerControls" hidden aria-label="Video controls">
+                  <button class="player-icon-button" id="playerPlayPause" type="button" aria-label="Play video"><i data-lucide="play" aria-hidden="true"></i></button>
+                  <button class="player-icon-button skip-button" id="playerSkipBack" type="button" aria-label="Skip back 10 seconds"><i data-lucide="rotate-ccw" aria-hidden="true"></i><span>10</span></button>
+                  <button class="player-icon-button skip-button" id="playerSkipForward" type="button" aria-label="Skip forward 10 seconds"><i data-lucide="rotate-cw" aria-hidden="true"></i><span>10</span></button>
+                  <button class="player-icon-button" id="playerMute" type="button" aria-label="Mute video"><i data-lucide="volume-2" aria-hidden="true"></i></button>
+                  <label class="volume-control"><span class="sr-only">Volume</span><input id="playerVolume" type="range" min="0" max="1" step="0.05" value="1" /></label>
+                  <span class="player-time"><span id="playerCurrentTime">0:00</span><span aria-hidden="true"> / </span><span id="playerDuration">0:00</span></span>
+                  <label class="seek-control"><span class="sr-only">Seek through video</span><input id="playerSeek" type="range" min="0" max="100" step="0.1" value="0" /></label>
+                  <label class="player-select"><span class="sr-only">Playback speed</span><select id="playerSpeed" aria-label="Playback speed"><option value="0.5">0.5x</option><option value="0.75">0.75x</option><option value="1" selected>Normal</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="1.75">1.75x</option><option value="2">2x</option></select></label>
+                  <label class="player-select"><span class="sr-only">Video quality</span><select id="playerQuality" aria-label="Video quality"><option>Auto</option></select></label>
+                  <button class="player-icon-button" id="playerFullscreen" type="button" aria-label="Enter fullscreen"><i data-lucide="maximize" aria-hidden="true"></i></button>
+                </div>
               </div>
               <div class="featured-copy">
-                <div class="eyebrow-row"><span class="volume-pill" id="featuredVolume">Vol 4</span><span class="subject-pill" id="featuredSubject">Math</span><span class="updated-copy" id="featuredUpdated">Updated yesterday</span></div>
-                <h3 id="featuredTitle">Algebra essentials: systems of equations</h3>
-                <p id="featuredDescription">Build a clear method for solving two equations together, with Priya's paper-first walkthrough.</p>
+                <div class="eyebrow-row"><span class="volume-pill" id="featuredVolume" hidden></span><span class="subject-pill" id="featuredSubject" hidden></span><span class="updated-copy" id="featuredUpdated">Ready for your first upload</span></div>
+                <h3 id="featuredTitle">Your lesson shelf is ready</h3>
+                <p id="featuredDescription">Add your English tutor videos to a volume folder, then list them in Video resource/videos.json.</p>
                 <div class="tutor-row">
-                  <span class="tutor-avatar" id="featuredTutorAvatar">PC</span>
-                  <span><strong id="featuredTutor">Priya Chandra</strong><small id="featuredTutorRole">English tutor</small></span>
-                  <button class="save-button" id="saveFeaturedButton" type="button" aria-label="Save lesson"><i data-lucide="bookmark" aria-hidden="true"></i></button>
+                  <span class="tutor-avatar" id="featuredTutorAvatar">--</span>
+                  <span><strong id="featuredTutor">No lessons added yet</strong><small id="featuredTutorRole">Waiting for your video files</small></span>
+                  <button class="save-button" id="saveFeaturedButton" type="button" aria-label="Save lesson" hidden><i data-lucide="bookmark" aria-hidden="true"></i></button>
                 </div>
-                <button class="primary-button" id="resumeButton" type="button"><i data-lucide="play-circle" aria-hidden="true"></i>Resume lesson</button>
+                <button class="primary-button" id="resumeButton" type="button" hidden><i data-lucide="play-circle" aria-hidden="true"></i>Resume lesson</button>
+                <button class="youtube-button" id="youtubeOpenButton" type="button" hidden><i data-lucide="external-link" aria-hidden="true"></i>Watch on YouTube</button>
               </div>
             </article>
           </section>
@@ -130,7 +144,7 @@
             <div class="empty-state" id="emptyState" hidden>
               <i data-lucide="search-x" aria-hidden="true"></i>
               <h3>No lessons found</h3>
-              <p>Try a different subject or search term.</p>
+                <p>Add your first English video to a volume folder, then update videos.json.</p>
             </div>
           </section>
         </section>

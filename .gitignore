@@ -1,0 +1,5 @@
+# Large local video files stay on the machine; lessons use YouTube links.
+Video resource/**/*.mp4
+Video resource/**/*.mov
+Video resource/**/*.m4v
+Video resource/**/*.webm
