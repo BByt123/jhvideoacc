@@ -1,6 +1,8 @@
 [
   {
     "id": "algebra-essentials",
+    "volume": "Vol 4",
+    "volumeNumber": 4,
     "title": "Algebra essentials: systems of equations",
     "subject": "Math",
     "tutor": "Priya Chandra",
@@ -18,6 +20,8 @@
   },
   {
     "id": "essay-architecture",
+    "volume": "Vol 4",
+    "volumeNumber": 4,
     "title": "The architecture of a strong essay",
     "subject": "Writing",
     "tutor": "Maya Patel",
@@ -35,6 +39,8 @@
   },
   {
     "id": "cellular-energy",
+    "volume": "Vol 4",
+    "volumeNumber": 4,
     "title": "Cellular energy, without the fog",
     "subject": "Science",
     "tutor": "Noah Williams",
@@ -52,6 +58,8 @@
   },
   {
     "id": "fractions-confidence",
+    "volume": "Vol 4",
+    "volumeNumber": 4,
     "title": "Fractions with confidence",
     "subject": "Math",
     "tutor": "Priya Chandra",
@@ -69,6 +77,8 @@
   },
   {
     "id": "reading-between-lines",
+    "volume": "Vol 3",
+    "volumeNumber": 3,
     "title": "Reading between the lines",
     "subject": "Writing",
     "tutor": "Maya Patel",
@@ -86,6 +96,8 @@
   },
   {
     "id": "lab-notebook",
+    "volume": "Vol 3",
+    "volumeNumber": 3,
     "title": "How to think in a lab notebook",
     "subject": "Science",
     "tutor": "Noah Williams",

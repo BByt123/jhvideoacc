@@ -1,6 +1,8 @@
 const librarySeed = [
   {
     id: "algebra-essentials",
+    volume: "Vol 4",
+    volumeNumber: 4,
     title: "Algebra essentials: systems of equations",
     subject: "Math",
     tutor: "Priya Chandra",
@@ -18,6 +20,8 @@ const librarySeed = [
   },
   {
     id: "essay-architecture",
+    volume: "Vol 4",
+    volumeNumber: 4,
     title: "The architecture of a strong essay",
     subject: "Writing",
     tutor: "Maya Patel",
@@ -35,6 +39,8 @@ const librarySeed = [
   },
   {
     id: "cellular-energy",
+    volume: "Vol 4",
+    volumeNumber: 4,
     title: "Cellular energy, without the fog",
     subject: "Science",
     tutor: "Noah Williams",
@@ -52,6 +58,8 @@ const librarySeed = [
   },
   {
     id: "fractions-confidence",
+    volume: "Vol 4",
+    volumeNumber: 4,
     title: "Fractions with confidence",
     subject: "Math",
     tutor: "Priya Chandra",
@@ -69,6 +77,8 @@ const librarySeed = [
   },
   {
     id: "reading-between-lines",
+    volume: "Vol 3",
+    volumeNumber: 3,
     title: "Reading between the lines",
     subject: "Writing",
     tutor: "Maya Patel",
@@ -86,6 +96,8 @@ const librarySeed = [
   },
   {
     id: "lab-notebook",
+    volume: "Vol 3",
+    volumeNumber: 3,
     title: "How to think in a lab notebook",
     subject: "Science",
     tutor: "Noah Williams",
@@ -103,9 +115,10 @@ const librarySeed = [
   }
 ];
 
-let lessons = [...librarySeed];
+let lessons = librarySeed.map(normalizeLesson);
 let activeFilter = "All";
 let activeView = "Home";
+let activeVolume = null;
 let featuredId = "algebra-essentials";
 let toastTimeout;
 
@@ -124,14 +137,48 @@ function showToast(message) {
   toastTimeout = setTimeout(() => toast.classList.remove("is-visible"), 2800);
 }
 
+function normalizeLesson(lesson) {
+  const numberFromLabel = Number(String(lesson.volume || "").match(/\d+/)?.[0]);
+  const volumeNumber = Number(lesson.volumeNumber) || numberFromLabel || 1;
+  return { ...lesson, volumeNumber, volume: lesson.volume || `Vol ${volumeNumber}`, volumeId: `vol-${volumeNumber}` };
+}
+
+function volumeGroups() {
+  const groups = new Map();
+  lessons.forEach((lesson) => {
+    if (!groups.has(lesson.volumeId)) groups.set(lesson.volumeId, { id: lesson.volumeId, label: lesson.volume, number: lesson.volumeNumber, lessons: [] });
+    groups.get(lesson.volumeId).lessons.push(lesson);
+  });
+  return [...groups.values()].sort((a, b) => b.number - a.number);
+}
+
+function activeVolumeGroup() {
+  return volumeGroups().find((volume) => volume.id === activeVolume);
+}
+
+function renderVolumeTabs() {
+  const volumes = volumeGroups();
+  if (!volumes.length) return;
+  if (!activeVolume || (activeVolume !== "all" && !volumes.some((volume) => volume.id === activeVolume))) activeVolume = volumes[0].id;
+  const tabs = volumes.map((volume) => `
+    <button class="volume-tab${activeVolume === volume.id ? " is-active" : ""}" data-volume="${volume.id}" type="button" role="tab" aria-selected="${activeVolume === volume.id}">
+      <span class="volume-tab-label">${volume.label}</span><span class="volume-tab-count">${volume.lessons.length} videos</span>
+    </button>
+  `).join("");
+  $("#volumeTabs").innerHTML = `${tabs}<button class="volume-tab is-all${activeVolume === "all" ? " is-active" : ""}" data-volume="all" type="button" role="tab" aria-selected="${activeVolume === "all"}"><span class="volume-tab-label">All volumes</span><span class="volume-tab-count">${lessons.length} videos</span></button>`;
+  const current = activeVolumeGroup();
+  $("#volumeSummary").textContent = activeVolume === "all" ? `${lessons.length} videos across ${volumes.length} volumes` : `${current.lessons.length} videos · newest volume first`;
+}
+
 function filteredLessons() {
   const query = $("#searchInput").value.trim().toLowerCase();
   return lessons.filter((lesson) => {
     const matchesFilter = activeFilter === "All" || lesson.subject === activeFilter;
+    const matchesVolume = activeVolume === "all" || !activeVolume || lesson.volumeId === activeVolume;
     const matchesView = activeView !== "Saved" || lesson.saved;
     const haystack = `${lesson.title} ${lesson.subject} ${lesson.tutor}`.toLowerCase();
-    return matchesFilter && matchesView && (!query || haystack.includes(query));
-  });
+    return matchesFilter && matchesVolume && matchesView && (!query || haystack.includes(query));
+  }).sort((a, b) => b.volumeNumber - a.volumeNumber || a.title.localeCompare(b.title));
 }
 
 function renderFeatured() {
@@ -147,6 +194,7 @@ function renderFeatured() {
   player.removeAttribute("src");
   if (hasVideo) player.src = resolveVideoUrl(lesson.videoUrl);
   $("#featuredTitle").textContent = lesson.title;
+  $("#featuredVolume").textContent = lesson.volume;
   $("#featuredSubject").textContent = lesson.subject;
   $("#featuredUpdated").textContent = lesson.updated;
   $("#featuredDescription").textContent = lesson.description;
@@ -155,6 +203,7 @@ function renderFeatured() {
   $("#featuredDuration").textContent = lesson.duration;
   $("#featuredProgressLabel").textContent = lesson.watched;
   $("#featuredProgressBar").style.width = `${lesson.progress}%`;
+  $("#featuredLessonNumber").textContent = lesson.lessonNumber || "Tutor lesson";
   $("#playButton").setAttribute("aria-label", `Play ${lesson.title}`);
   $("#saveFeaturedButton").classList.toggle("is-saved", lesson.saved);
   $("#videoStatus").textContent = lesson.videoUrl ? "Ready to watch" : "Preview lesson";
@@ -187,7 +236,8 @@ function renderCards() {
   `).join("");
   $("#emptyState").hidden = visibleLessons.length > 0;
   $("#clearSearchButton").hidden = !$("#searchInput").value;
-  $("#lessonCount").textContent = `${lessons.filter((lesson) => lesson.progress > 0).length} lessons in progress`;
+  const currentVolume = activeVolumeGroup();
+  $("#lessonCount").textContent = activeVolume === "all" ? `${visibleLessons.length} lessons across all volumes` : `${visibleLessons.length} lessons in ${currentVolume?.label || "this volume"}`;
   renderIcons();
 }
 
@@ -215,6 +265,17 @@ function bindEvents() {
     });
     renderCards();
   }));
+
+  $("#volumeTabs").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-volume]");
+    if (!button) return;
+    activeVolume = button.dataset.volume;
+    const firstLesson = activeVolume === "all" ? filteredLessons()[0] : volumeGroups().find((volume) => volume.id === activeVolume)?.lessons[0];
+    if (firstLesson) featuredId = firstLesson.id;
+    renderVolumeTabs();
+    renderFeatured();
+    renderCards();
+  });
 
   $("#searchInput").addEventListener("input", renderCards);
   $("#clearSearchButton").addEventListener("click", () => {
@@ -263,10 +324,11 @@ async function loadCatalog() {
     const response = await fetch("./Video%20resource/videos.json", { cache: "no-store" });
     if (!response.ok) throw new Error("Manifest unavailable");
     const remoteLessons = await response.json();
-    if (Array.isArray(remoteLessons) && remoteLessons.length) lessons = remoteLessons;
+    if (Array.isArray(remoteLessons) && remoteLessons.length) lessons = remoteLessons.map(normalizeLesson);
   } catch (error) {
     // The inline seed keeps the page usable when opened directly from disk.
   }
+  renderVolumeTabs();
   renderFeatured();
   renderCards();
 }
