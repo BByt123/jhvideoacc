@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#202420" />
+    <meta name="description" content="JH Studyroom is a calm home for tutor-led video lessons." />
+    <title>JH Studyroom | Tutor video lessons</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Primary navigation">
+        <div class="brand-lockup">
+          <div class="brand-mark" aria-hidden="true">JH</div>
+          <div>
+            <p class="brand-name">JH Studyroom</p>
+            <p class="brand-caption">Tutor-led learning</p>
+          </div>
+        </div>
+
+        <nav class="main-nav">
+          <p class="nav-label">Your desk</p>
+          <button class="nav-item is-active" data-view="Home" type="button">
+            <i data-lucide="house" aria-hidden="true"></i><span>Home</span><span class="nav-count">12</span>
+          </button>
+          <button class="nav-item" data-view="Library" type="button">
+            <i data-lucide="library" aria-hidden="true"></i><span>Library</span><span class="nav-count">24</span>
+          </button>
+          <button class="nav-item" data-view="Saved" type="button">
+            <i data-lucide="bookmark" aria-hidden="true"></i><span>Saved</span><span class="nav-count">7</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-note">
+          <span class="note-dot" aria-hidden="true"></span>
+          <p><strong>Small steps count.</strong><br />Pick up where you left off.</p>
+        </div>
+
+        <div class="sidebar-footer">
+          <button class="profile-button" type="button" aria-label="Open profile">
+            <span class="avatar">AM</span>
+            <span class="profile-copy"><strong>Alex Morgan</strong><small>Evening learner</small></span>
+            <i data-lucide="chevrons-up-down" aria-hidden="true"></i>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="mobile-brand">
+            <div class="brand-mark" aria-hidden="true">JH</div>
+            <span>JH Studyroom</span>
+          </div>
+          <div class="topbar-copy">
+            <p class="date-line" id="dateLine">Tuesday, November 7, 2026</p>
+            <h1 id="greeting">Good evening, Alex.</h1>
+          </div>
+          <label class="search-box">
+            <i data-lucide="search" aria-hidden="true"></i>
+            <span class="sr-only">Search lessons</span>
+            <input id="searchInput" type="search" placeholder="Search lessons" autocomplete="off" />
+            <kbd>/</kbd>
+          </label>
+        </header>
+
+        <section class="content-wrap" aria-label="Lesson dashboard">
+          <div class="filter-row">
+            <div class="filter-tabs" role="tablist" aria-label="Lesson filters">
+              <button class="filter-tab is-active" data-filter="All" type="button" role="tab" aria-selected="true">All lessons</button>
+              <button class="filter-tab" data-filter="Math" type="button" role="tab" aria-selected="false">Math</button>
+              <button class="filter-tab" data-filter="Writing" type="button" role="tab" aria-selected="false">Writing</button>
+              <button class="filter-tab" data-filter="Science" type="button" role="tab" aria-selected="false">Science</button>
+            </div>
+            <button class="quiet-action" id="viewQueueButton" type="button"><i data-lucide="list-video" aria-hidden="true"></i>View queue</button>
+          </div>
+
+          <section class="featured-layout" aria-labelledby="continueTitle">
+            <div class="section-heading">
+              <div>
+                <p class="section-kicker">Pick up where you left off</p>
+                <h2 id="continueTitle">Continue watching</h2>
+              </div>
+              <span class="lesson-count" id="lessonCount">3 lessons in progress</span>
+            </div>
+
+            <article class="featured-lesson" id="featuredLesson">
+              <div class="video-stage" id="videoStage">
+                <img id="featuredPoster" src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&amp;fit=crop&amp;w=1400&amp;q=85" alt="Tutor writing a math problem on a glass board" />
+                <video id="featuredVideo" controls playsinline preload="metadata" hidden></video>
+                <div class="video-wash" aria-hidden="true"></div>
+                <div class="video-topline"><span class="live-dot"></span><span id="videoStatus">Preview lesson</span><span class="video-duration" id="featuredDuration">14:32</span></div>
+                <button class="play-button" id="playButton" type="button" aria-label="Play Algebra essentials lesson"><i data-lucide="play" aria-hidden="true"></i></button>
+                <div class="video-bottomline">
+                  <span id="featuredProgressLabel">06:18 watched</span>
+                  <span>Lesson 03 of 08</span>
+                </div>
+                <div class="progress-track" aria-label="Lesson progress"><span id="featuredProgressBar" style="width: 43%"></span></div>
+              </div>
+              <div class="featured-copy">
+                <div class="eyebrow-row"><span class="subject-pill" id="featuredSubject">Math</span><span class="updated-copy" id="featuredUpdated">Updated yesterday</span></div>
+                <h3 id="featuredTitle">Algebra essentials: systems of equations</h3>
+                <p id="featuredDescription">Build a clear method for solving two equations together, with Priya's paper-first walkthrough.</p>
+                <div class="tutor-row">
+                  <span class="tutor-avatar" id="featuredTutorAvatar">PC</span>
+                  <span><strong id="featuredTutor">Priya Chandra</strong><small>Mathematics tutor</small></span>
+                  <button class="save-button" id="saveFeaturedButton" type="button" aria-label="Save lesson"><i data-lucide="bookmark" aria-hidden="true"></i></button>
+                </div>
+                <button class="primary-button" id="resumeButton" type="button"><i data-lucide="play-circle" aria-hidden="true"></i>Resume lesson</button>
+              </div>
+            </article>
+          </section>
+
+          <section class="catalog-section" aria-labelledby="catalogTitle">
+            <div class="section-heading catalog-heading">
+              <div>
+                <p class="section-kicker">A thoughtful mix for this week</p>
+                <h2 id="catalogTitle">For your study list</h2>
+              </div>
+              <button class="text-action" id="clearSearchButton" type="button" hidden>Clear search</button>
+            </div>
+            <div class="lesson-grid" id="lessonGrid" aria-live="polite"></div>
+            <div class="empty-state" id="emptyState" hidden>
+              <i data-lucide="search-x" aria-hidden="true"></i>
+              <h3>No lessons found</h3>
+              <p>Try a different subject or search term.</p>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
