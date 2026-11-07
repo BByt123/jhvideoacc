@@ -1,6 +1,6 @@
 # Video resource
 
-Organize lesson records by volume in `videos.json`, for example `Vol 4`, `Vol 3`, and later `Vol 5`. The first Vol 3 lesson is already registered; add future lessons as new objects and point each `youtubeUrl` at its private or unlisted YouTube watch link.
+Organize lesson records by volume in `videos.json`, for example `Vol 4`, `Vol 3`, and later `Vol 5`. Keep the volume list in [`volumes.json`](./volumes.json) so empty volumes still appear in the navigation. The first Vol 3 lesson is already registered; add future lessons as new objects and point each `youtubeUrl` at its private or unlisted YouTube watch link.
 
 Example:
 

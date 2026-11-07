@@ -13,4 +13,4 @@ A static English tutor video watching platform designed for GitHub Pages. It has
 
 This project is dependency-free. Push the repository, then choose **Settings → Pages → Deploy from a branch**, select the branch and `/ (root)` folder, and save. The site entry point is [`index.html`](./index.html).
 
-Add each new lesson object to the manifest as you add a lesson. Volume tabs are sorted with the highest volume number first. YouTube handles playback, speed, quality, scrubbing, volume, skip, and fullscreen controls. Large local video files are ignored by Git through `.gitignore`.
+Add each new lesson object to the manifest as you add a lesson. Add new volume numbers to [`Video resource/volumes.json`](./Video%20resource/volumes.json); volume tabs are sorted with the highest volume number first, including empty volumes. YouTube handles playback, speed, quality, scrubbing, volume, skip, and fullscreen controls. Large local video files are ignored by Git through `.gitignore`.

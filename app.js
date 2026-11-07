@@ -154,6 +154,7 @@ const librarySeed = []; /*
 ]; */
 
 let lessons = librarySeed.map(normalizeLesson);
+let knownVolumes = [];
 let activeFilter = "All";
 let activeView = "Home";
 let activeVolume = null;
@@ -203,14 +204,14 @@ function getYoutubeEmbedUrl(value) {
     if (!videoId && url.hostname === "youtu.be") videoId = url.pathname.slice(1).split("/")[0];
     if (!videoId && url.pathname.includes("/embed/")) videoId = url.pathname.split("/embed/")[1].split("/")[0];
     if (!videoId && url.pathname.includes("/shorts/")) videoId = url.pathname.split("/shorts/")[1].split("/")[0];
-    return videoId ? `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1` : value;
+    return videoId ? `https://www.youtube.com/embed/${videoId}?controls=1&fs=1&playsinline=1&rel=0&modestbranding=1` : value;
   } catch (error) {
     return value;
   }
 }
 
 function volumeGroups() {
-  const groups = new Map();
+  const groups = new Map(knownVolumes.map((volume) => [volume.id, { ...volume, lessons: [] }]));
   lessons.forEach((lesson) => {
     if (!groups.has(lesson.volumeId)) groups.set(lesson.volumeId, { id: lesson.volumeId, label: lesson.volume, number: lesson.volumeNumber, lessons: [] });
     groups.get(lesson.volumeId).lessons.push(lesson);
@@ -242,7 +243,9 @@ function renderVolumeTabs() {
     $("#volumeSummary").textContent = "Add a volume folder to get started";
     return;
   }
-  if (!activeVolume || (activeVolume !== "all" && !volumes.some((volume) => volume.id === activeVolume))) activeVolume = volumes[0].id;
+  if (!activeVolume || (activeVolume !== "all" && !volumes.some((volume) => volume.id === activeVolume))) {
+    activeVolume = volumes.find((volume) => volume.lessons.length > 0)?.id || volumes[0].id;
+  }
   const tabs = volumes.map((volume) => `
     <button class="volume-tab${activeVolume === volume.id ? " is-active" : ""}" data-volume="${volume.id}" type="button" role="tab" aria-selected="${activeVolume === volume.id}">
       <span class="volume-tab-label">${volume.label}</span><span class="volume-tab-count">${volume.lessons.length} videos</span>
@@ -499,7 +502,7 @@ function bindEvents() {
     if (!button) return;
     activeVolume = button.dataset.volume;
     const firstLesson = activeVolume === "all" ? filteredLessons()[0] : volumeGroups().find((volume) => volume.id === activeVolume)?.lessons[0];
-    if (firstLesson) featuredId = firstLesson.id;
+    featuredId = firstLesson?.id || null;
     renderVolumeTabs();
     renderFeatured();
     renderCards();
@@ -580,10 +583,21 @@ function bindEvents() {
 
 async function loadCatalog() {
   try {
-    const response = await fetch("./Video%20resource/videos.json", { cache: "no-store" });
-    if (!response.ok) throw new Error("Manifest unavailable");
-    const remoteLessons = await response.json();
+    const [lessonResponse, volumeResponse] = await Promise.all([
+      fetch("./Video%20resource/videos.json", { cache: "no-store" }),
+      fetch("./Video%20resource/volumes.json", { cache: "no-store" })
+    ]);
+    if (!lessonResponse.ok) throw new Error("Manifest unavailable");
+    const remoteLessons = await lessonResponse.json();
     if (Array.isArray(remoteLessons)) lessons = remoteLessons.map(normalizeLesson);
+    if (volumeResponse.ok) {
+      const remoteVolumes = await volumeResponse.json();
+      if (Array.isArray(remoteVolumes)) knownVolumes = remoteVolumes.map((volume) => ({
+        id: `vol-${volume.number}`,
+        label: volume.label || `Vol ${volume.number}`,
+        number: Number(volume.number) || 0
+      }));
+    }
   } catch (error) {
     // The empty catalog keeps the page usable when opened directly from disk.
   }
