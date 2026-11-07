@@ -450,12 +450,11 @@ function renderCards() {
   grid.innerHTML = visibleLessons.map((lesson) => `
     <article class="lesson-card" data-lesson-id="${lesson.id}">
       <button class="card-poster" type="button" aria-label="Open ${lesson.title}">
-        <img loading="lazy" src="${lesson.poster}" alt="" />
+        <span class="card-button-title">${lesson.title}</span>
         <span class="card-label">${lesson.subject}</span>
         <span class="card-time">${lesson.duration}</span>
       </button>
       <div class="card-body">
-        <h3>${lesson.title}</h3>
         <div class="card-meta"><span class="mini-avatar">${lesson.initials}</span><span>${lesson.tutor}</span><span aria-hidden="true">·</span><span>${lesson.progress ? `${lesson.progress}% watched` : "New lesson"}</span></div>
         <div class="card-progress" aria-label="${lesson.progress}% watched"><span style="width: ${lesson.progress}%"></span></div>
       </div>
