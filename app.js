@@ -204,7 +204,7 @@ function getYoutubeEmbedUrl(value) {
     if (!videoId && url.hostname === "youtu.be") videoId = url.pathname.slice(1).split("/")[0];
     if (!videoId && url.pathname.includes("/embed/")) videoId = url.pathname.split("/embed/")[1].split("/")[0];
     if (!videoId && url.pathname.includes("/shorts/")) videoId = url.pathname.split("/shorts/")[1].split("/")[0];
-    return videoId ? `https://www.youtube.com/embed/${videoId}?controls=1&fs=1&playsinline=1&rel=0&modestbranding=1` : value;
+    return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1&fs=1&mute=1&playsinline=1&rel=0&modestbranding=1` : value;
   } catch (error) {
     return value;
   }
