@@ -82,19 +82,10 @@
             <div class="volume-tabs" id="volumeTabs" role="tablist" aria-label="Course volumes"></div>
           </section>
 
-          <section class="featured-layout" aria-labelledby="continueTitle">
-            <div class="section-heading">
-              <div>
-                <p class="section-kicker">Pick up where you left off</p>
-                <h2 id="continueTitle">Continue watching</h2>
-              </div>
-              <span class="lesson-count" id="lessonCount">No lessons yet</span>
-            </div>
-
+          <section class="featured-layout" aria-label="Lesson player">
             <article class="featured-lesson is-empty" id="featuredLesson">
               <div class="video-stage" id="videoStage">
                 <img id="featuredPoster" src="" alt="" hidden />
-                <video id="featuredVideo" playsinline preload="metadata" hidden></video>
                 <iframe id="featuredEmbed" title="YouTube lesson player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen hidden></iframe>
                 <div class="video-wash" aria-hidden="true"></div>
                 <div class="video-topline"><span class="live-dot"></span><span id="videoStatus">No lesson selected</span><span class="video-duration" id="featuredDuration"></span></div>
@@ -104,26 +95,14 @@
                   <span id="featuredLessonNumber"></span>
                 </div>
                 <div class="progress-track" aria-label="Lesson progress"><span id="featuredProgressBar" style="width: 0%"></span></div>
-                <div class="player-controls" id="playerControls" hidden aria-label="Video controls">
-                  <button class="player-icon-button" id="playerPlayPause" type="button" aria-label="Play video"><i data-lucide="play" aria-hidden="true"></i></button>
-                  <button class="player-icon-button skip-button" id="playerSkipBack" type="button" aria-label="Skip back 10 seconds"><i data-lucide="rotate-ccw" aria-hidden="true"></i><span>10</span></button>
-                  <button class="player-icon-button skip-button" id="playerSkipForward" type="button" aria-label="Skip forward 10 seconds"><i data-lucide="rotate-cw" aria-hidden="true"></i><span>10</span></button>
-                  <button class="player-icon-button" id="playerMute" type="button" aria-label="Mute video"><i data-lucide="volume-2" aria-hidden="true"></i></button>
-                  <label class="volume-control"><span class="sr-only">Volume</span><input id="playerVolume" type="range" min="0" max="1" step="0.05" value="1" /></label>
-                  <span class="player-time"><span id="playerCurrentTime">0:00</span><span aria-hidden="true"> / </span><span id="playerDuration">0:00</span></span>
-                  <label class="seek-control"><span class="sr-only">Seek through video</span><input id="playerSeek" type="range" min="0" max="100" step="0.1" value="0" /></label>
-                  <label class="player-select"><span class="sr-only">Playback speed</span><select id="playerSpeed" aria-label="Playback speed"><option value="0.5">0.5x</option><option value="0.75">0.75x</option><option value="1" selected>Normal</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="1.75">1.75x</option><option value="2">2x</option></select></label>
-                  <label class="player-select"><span class="sr-only">Video quality</span><select id="playerQuality" aria-label="Video quality"><option>Auto</option></select></label>
-                  <button class="player-icon-button" id="playerFullscreen" type="button" aria-label="Enter fullscreen"><i data-lucide="maximize" aria-hidden="true"></i></button>
-                </div>
               </div>
               <div class="featured-copy">
                 <div class="eyebrow-row"><span class="volume-pill" id="featuredVolume" hidden></span><span class="subject-pill" id="featuredSubject" hidden></span><span class="updated-copy" id="featuredUpdated">Ready for your first upload</span></div>
                 <h3 id="featuredTitle">Your lesson shelf is ready</h3>
-                <p id="featuredDescription">Add your English tutor videos to a volume folder, then list them in Video resource/videos.json.</p>
+                <p id="featuredDescription">Add a YouTube lesson to the JSON catalog in Video resource/videos.json.</p>
                 <div class="tutor-row">
                   <span class="tutor-avatar" id="featuredTutorAvatar">--</span>
-                  <span><strong id="featuredTutor">No lessons added yet</strong><small id="featuredTutorRole">Waiting for your video files</small></span>
+                  <span><strong id="featuredTutor">No lessons added yet</strong><small id="featuredTutorRole">Waiting for your YouTube links</small></span>
                   <button class="save-button" id="saveFeaturedButton" type="button" aria-label="Save lesson" hidden><i data-lucide="bookmark" aria-hidden="true"></i></button>
                 </div>
                 <button class="primary-button" id="resumeButton" type="button" hidden><i data-lucide="play-circle" aria-hidden="true"></i>Resume lesson</button>
@@ -138,13 +117,14 @@
                 <p class="section-kicker">A thoughtful mix for this week</p>
                 <h2 id="catalogTitle">For your study list</h2>
               </div>
+              <span class="lesson-count" id="lessonCount">No lessons yet</span>
               <button class="text-action" id="clearSearchButton" type="button" hidden>Clear search</button>
             </div>
             <div class="lesson-grid" id="lessonGrid" aria-live="polite"></div>
             <div class="empty-state" id="emptyState" hidden>
               <i data-lucide="search-x" aria-hidden="true"></i>
               <h3>No lessons found</h3>
-                <p>Add your first English video to a volume folder, then update videos.json.</p>
+                <p>Add your first YouTube lesson to Video resource/videos.json.</p>
             </div>
           </section>
         </section>
